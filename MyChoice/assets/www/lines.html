@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<script type="text/javascript" src="js/ichart.latest.min.js"></script>
+<link rel="stylesheet" href="table.css" />
+<script type="text/javascript">
+	function noresult(msg) {
+		if (msg == null) {
+			msg = "暂无数据";
+		}
+		var mytable = document.getElementById("noresult");
+		mytable.innerHTML = msg;
+	}
+	function draws(contact, values) {
+		var mytable = document.getElementById("mytable");
+		mytable.innerHTML = values;
+		draw(contact);
+	}
+
+	function draw(contact) {
+		//var contact='{"data":[{"val":["0","100"],"color":"#aad0db","width":"2","name":"个人分"},{"val":["0","99"],"color":"#f68f70","width":"2","name":"最高分"},{"val":["0","90.5"],"color":"#aad0db","width":"2","name":"平均分"}],"title":"大学英语","labels":["","2012-2013学年第二学期"]}';
+		if (contact != "") {
+			var json = eval('(' + contact + ')'); //得到json数据 
+			var flow = json.data;
+			var labels = json.labels;
+			var title = json.title;
+			if(flow.length<=1){
+				var canvasTable = document.getElementById("canvasTable");
+				canvasTable.style.display ="none";
+			}else{
+				fill(flow, labels, title);
+			}
+		} else {
+			noresult("抱歉，没有数据")
+		}
+
+	}
+
+	function fill(flow, labels, title) {
+		var data = new Array();
+		for ( var i = 0; i < flow.length; i++) {
+			data[i] = {
+				name : flow[i].name,
+				value : flow[i].val,
+				color : flow[i].color,
+				line_width : flow[i].width
+			};
+
+		}
+
+		var chart = new iChart.Area2D({
+			render : 'canvasDiv',
+			data : data,
+			title : title,
+			width : window.screen.width + 10,
+			height : 350,
+			legend : {
+				enable : true,
+				row : 1,//设置在一行上显示，与column配合使用
+				column : 'max',
+				valign : 'top',
+				background_color : null,//设置透明背景
+				offsetx : -30,//设置x轴偏移，满足位置需要
+				border : false
+			},
+			tip : {
+				enable : true,
+				listeners : {
+					//tip:提示框对象、name:数据名称、value:数据值、text:当前文本、i:数据点的索引
+					parseText : function(tip, name, value, text, i) {
+						return name + ":" + labels[i] + value;
+					}
+				}
+			},
+			crosshair : {
+				enable : true,
+				line_color : '#62bce9',
+				line_width : 2
+			},
+			sub_option : {
+				label : false,
+				point_size : 10
+			},
+			background_color : '#f2f2f2',
+			coordinate : {
+				axis : {
+					width : [ 0, 0, 2, 0 ]
+				},
+				background_color : '#ffffff',
+				width : '90%',
+				height : '75%',
+				scale : [ {
+					position : 'left',
+					scale_space : 10,
+					scale_enable : false,//禁用小横线
+					listeners : {
+						parseText : function(t, x, y) {
+							return {
+								text : t
+							}
+						}
+					}
+				}, {
+					position : 'bottom',
+					start_scale : 1,
+					end_scale : 12,
+					parseText : function(t, x, y) {
+						return {
+							textY : y + 10
+						}
+					},
+					labels : labels
+				} ]
+			}
+		});
+		chart.draw();
+	}
+</script>
+</head>
+<body onload="android.lines()">
+	<table id="canvasTable"  style=" width: 100%; margin-top: 5px; text-align: center;">
+		<tr>
+			<td align="center" style="border: 0px;"><div id="canvasDiv"
+					style="margin-left: auto; margin-right: auto;"></div></td>
+		</tr>
+	</table>
+	<table id="mytable" border='1' rules=rows class="mytable">
+	</table>
+	<div id="noresult"></div>
+</body>
+</html>

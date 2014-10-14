@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+      
+    	<LinearLayout
+    	    xmlns:android="http://schemas.android.com/apk/res/android"
+    	    android:id="@+id/main_dialog_layout"
+	      	android:layout_width="fill_parent"
+        	android:layout_height="wrap_content"         	
+        	android:background="@null"      	
+        	android:orientation="vertical"
+        	 >
+        	 
+ 
+       <FrameLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp">  	
+            
+       <RelativeLayout 
+           
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+         
+           >
+       <ImageView 
+       android:id="@+id/mime_topimg"    
+       android:layout_width="fill_parent"
+       android:layout_height="240dip" 
+       android:src="@drawable/mimetopimg"  
+       android:scaleType="fitXY"   
+           />   
+      </RelativeLayout>    
+          
+        <RelativeLayout   
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"                                                
+                 >  
+       <com.itau.weicircle.RoundImageView
+       android:id="@+id/mime_img"    
+       android:layout_width="80dp"
+       android:layout_height="80dp" 
+       android:layout_alignParentRight="true"
+       android:layout_marginTop="110dp"  
+       android:layout_marginRight="40dp"
+       android:src="@drawable/tou"   
+       android:scaleType="fitXY" 
+       />
+       
+       
+           <TextView
+                android:id="@+id/name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_toLeftOf="@id/mime_img"
+                android:layout_marginRight="6dip"
+                android:layout_marginTop="216dp"                                                           
+                android:textSize="18sp"
+                android:text="小七"       
+                android:textColor="#fff" />
+      
+          
+       
+  
+       </RelativeLayout>
+       </FrameLayout>  
+       
+       
+           
+       </LinearLayout>
+

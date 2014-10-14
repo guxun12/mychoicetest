@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>ichartjs 例子</title>
+<meta http-equiv="keywords"
+	content="ichartjs demo,Html5 demo,ichart demo"></meta>
+<meta http-equiv="description"
+	content="The ichartjs's gallery center,ichartjs 示例中心"></meta>
+<script type="text/javascript" src="js/ichart-1.0.beta.min.js"></script>
+<link rel="stylesheet" href="table.css" />
+<script type="text/javascript">
+	function noresult(msg) {
+		if (msg == null) {
+			msg = "暂无数据";
+		}
+		var mytable = document.getElementById("noresult");
+		mytable.innerHTML = msg;
+	}
+
+	function draws(contact, values) {
+		var mytable = document.getElementById("mytable");
+		mytable.innerHTML = values;
+		draw(contact);
+	}
+
+	function draw(contact) {
+		if (contact != "") {
+			var json = eval('(' + contact + ')'); //得到json数据 
+			var flow = json.flow;
+			var labels = json.labels;
+			var title = json.title;
+			var end_scale = json.end_scale;
+			var scale_space = json.scale_space;
+			var xlabel = json.xlabel;
+			var ylabel = json.ylabel;
+			if(flow.length<=1){
+				var canvasTable = document.getElementById("canvasTable");
+				canvasTable.style.display ="none";
+			}else{
+				// var flow=[];
+				//	for(var i=0;i<8;i++){
+				//	flow.push(Math.floor(Math.random()*(10+((i%16)*3)))+10);
+				//	}
+				// var labels = ["2010-2011/1","2010-2011/2","2010-2011/2","2010-2011/2","2010-2011/2","2010-2011/2","2010-2011/2","2010-2011/2"];
+				fill(flow, labels, title, end_scale, scale_space, xlabel, ylabel);	
+			}
+		} else {
+			noresult("抱歉，没有数据")
+		}
+
+	}
+
+	function fill(flow, labels, title, end_scale, scale_space, xlabel, ylabel) {
+		var data = [ {
+			name : 'PV',
+			value : flow,
+			color : '#ec4646',
+			line_width : 2
+		} ];
+
+		var chart = new iChart.LineBasic2D({
+			render : 'canvasDiv',
+			data : data,
+			align : 'center',
+			title : {
+				text : title,
+				font : '微软雅黑',
+				fontsize : 24,
+				color : '#000000'
+			},
+
+			width : window.screen.width - 10,
+			height : 400,
+			shadow : true,
+			shadow_color : '#202020',
+			shadow_blur : 8,
+			shadow_offsetx : 0,
+			shadow_offsety : 0,
+			background_color : '#efefef',
+
+			crosshair : {
+				enable : true,
+				line_color : '#ec4646'
+			},
+			sub_option : {
+				smooth : true,
+				label : false,
+				hollow : false,
+				hollow_inside : false,
+				point_size : 8
+			},
+			coordinate : {
+				width : window.screen.width - 100,
+				height : 300,
+				striped_factor : 0.18,
+				grid_color : '#efefef',
+				axis : {
+					color : '#efefef',
+					width : [ 0, 0, 4, 4 ]
+				},
+
+				scale : [ {
+					position : 'left',
+					start_scale : 0,
+					end_scale : end_scale,
+					scale_space : scale_space,
+					scale_size : 2,
+					scale_enable : false,
+					label : {
+						color : '#9d987a',
+						font : '微软雅黑',
+						fontsize : 11,
+						fontweight : 600
+					},
+					scale_color : '#9f9f9f'
+				}, {
+					position : 'bottom',
+					label : {
+						color : '#9d987a',
+						font : '微软雅黑',
+						fontsize : 11,
+						fontweight : 600
+					},
+					scale_enable : false,
+					labels : labels
+				} ]
+			}
+		});
+
+		//利用自定义组件构造左侧说明文本
+		chart
+				.plugin(new iChart.Custom(
+						{
+							drawFn : function() {
+								//计算位置
+								var coo = chart.getCoordinate(), x = coo
+										.get('originx'), y = coo.get('originy'), w = coo
+										.get('width'), h = coo.get('height');
+								//在左上侧的位置，渲染一个单位的文字
+								chart.target.textAlign('start').textBaseline(
+										'bottom').textFont('600 11px 微软雅黑')
+										.fillText('访问量(万)', x - 40, y - 12,
+												false, '#9d987a').textBaseline(
+												'top').fillText('(时间)',
+												x + w + 12, y + h + 10, false,
+												'#9d987a');
+							}
+						}));
+
+		//开始画图
+		chart.draw();
+	}
+</script>
+</head>
+<body onload="android.line()">
+	<table id="canvasTable" style="width: 100%; margin-top: 20px; text-align: center;">
+		<tr>
+			<td align="center" style="border: 0px;"><div id="canvasDiv"
+					style="margin-left: auto; margin-right: auto;"></div></td>
+		</tr>
+	</table>
+	<table id="mytable" border='1' rules=rows class="mytable">
+	</table>
+	<div id="noresult"></div>
+</body>
+</html>

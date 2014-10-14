@@ -1,0 +1,52 @@
+html,body {
+	margin: 0 auto;
+}
+
+td {
+	color: gray;
+	min-height: 40px;
+	font-size: 14px;
+	border-bottom: #cccccc solid 1px;
+	max-width: 10em;
+	padding-left: 5px;
+	padding-right: 5px;
+	word-break: keep-all; /* 不换行 */
+	white-space: nowrap; /* 不换行 */
+	overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+	text-overflow: ellipsis;
+	/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+}
+
+.tr_one {
+	background-color: #ffffff;
+	height: 50px;
+}
+
+.tr_two {
+	background-color: #ffffff;
+	height: 50px;
+}
+
+.title td {
+	color: black;
+	border-bottom: #C0C0C0 solid 1px;
+	background-color: #EFEFEF;
+	height: 50px;
+}
+
+.mytable {
+	margin: auto;
+	border-collapse: collapse;
+	border-spacing: 0px;
+	border-color: #efefef;
+	width: 100%;
+	text-align: center;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+}
+
+#noresult {
+	color: red;
+	font-size: 20px;
+	margin-left: auto; margin-right: auto; text-align: center;
+}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>ichartjs 例子</title>
+<meta http-equiv="keywords"
+	content="ichartjs demo,Html5 demo,ichart demo"></meta>
+<meta http-equiv="description"
+	content="The ichartjs's gallery center,ichartjs 示例中心"></meta>
+<script type="text/javascript" src="js/ichart-1.0.beta.min.js"></script>
+</style>
+<link rel="stylesheet" href="table.css" />
+<script type="text/javascript">
+	function noresult(msg) {
+		if (msg == null) {
+			msg = "暂无数据";
+		}
+		var mytable = document.getElementById("noresult");
+		mytable.innerHTML = msg;
+	}
+
+	function draws(contact, values) {
+		var mytable = document.getElementById("mytable");
+		mytable.innerHTML = values;
+		draw(contact);
+	}
+
+	function draw(contact) {
+		var json = eval('(' + contact + ')'); //得到json数据 
+		var data = new Array();
+		var title = json.title;
+		data = json.data;
+		var bili = json.bili;
+		/* var title = "sdgdfh";
+		var bili = "fggghghg";
+		var data = [ {
+			name : '360 Browser',
+			value : 26.55,
+			color : '#cbab4f'
+		}, {
+			name : 'IE',
+			value : 52.20,
+			color : '#a5c2d5'
+		}, {
+			name : 'Chrome',
+			value : 8.26,
+			color : '#76a871'
+		}, {
+			name : 'Firefox',
+			value : 4.06,
+			color : '#9f7961'
+		}, {
+			name : 'Maxthon',
+			value : 2.78,
+			color : '#a56f8f'
+		}, {
+			name : 'Other',
+			value : 3.79,
+			color : '#bd355e'
+		}, {
+			name : 'Safari',
+			value : 2.35,
+			color : '#db9034'
+		} ]; */
+		$(function() {
+			new iChart.Pie3D({
+				render : 'canvasDiv',
+				data : data,
+				title : title,
+				footnote : bili,
+				legend : {
+					enable : true,
+					align : 'center',
+					valign : 'bottom',
+					row : 1,
+					column : 'max',
+					border : {
+						enable : false
+					}
+				},
+				showpercent : false,
+				yHeight : 60,
+				decimalsnum : 2,
+				radius : 180,
+				width : window.screen.width - 100,
+				height : 400
+			}).draw();
+		});
+	}
+</script>
+</head>
+<body onload="android.get3dPie()">
+	<table style="width: 100%; margin-top: 20px; text-align: center;">
+		<tr>
+			<td align="center" style="border: 0px;"><div id="canvasDiv"
+					style="margin-left: auto; margin-right: auto;"></div></td>
+		</tr>
+	</table>
+	<table id="mytable" border='1' rules=rows class="mytable">
+	</table>
+	<div id="noresult"></div>
+</body>
+</html>

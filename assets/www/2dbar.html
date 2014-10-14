@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>ichartjs 例子</title>
+<meta http-equiv="keywords"
+	content="ichartjs demo,Html5 demo,ichart demo"></meta>
+<meta http-equiv="description"
+	content="The ichartjs's gallery center,ichartjs 示例中心"></meta>
+<link rel="stylesheet" href="table.css" />
+<script type="text/javascript" src="js/ichart-1.0.beta.min.js"></script>
+<script type="text/javascript">
+	function draws(contact, values) {
+		var mytable = document.getElementById("mytable");
+		mytable.innerHTML = values;
+		draw(contact);
+	}
+	
+	
+	function noresult(msg) {
+		if(msg==null){
+			msg="暂无数据";
+		}
+		var mytable = document.getElementById("noresult");
+		mytable.innerHTML = msg;
+	}
+
+	function draw(contact) {
+		/* 	var data = [ {
+		 name : 'DPS01A',
+		 value : [ 45, 52, 54, 74, 90, 84 ],
+		 color : '#1f7e92',
+		 linewidth : 1
+		 }, {
+		 name : 'DPS01B',
+		 value : [ 60, 80, 105, 125, 108, 120 ],
+		 color : '#2b7f39',
+		 linewidth : 1
+		 } ];
+		 var labels=[ "一月", "二月", "三月", "四月", "五月", "六月" ];
+		 var title="fff"; */
+
+		//contact="{\"data\":[{\"value\":[2,1],\"linewidth\":1,\"color\":\"#1f7e92\",\"name\":\"已办\"},{\"value\":[7,7],\"linewidth\":1,\"color\":\"#2b7f39\",\"name\":\"应办\"}],\"title\":\"aaaaaaa\",\"labels\":[\"报道\",\"宿舍安排\"]}";
+		var data = new Array();
+		var json = eval('(' + contact + ')'); //得到json数据 
+		data = json.data;
+		var labels = json.labels;
+		var title = json.title;
+
+		$(function() {
+			new iChart.ColumnMulti2D({
+				render : 'canvasDiv',
+				data : data,
+				data_labels : labels,
+				title : title,
+				subtitle : '',
+				footnote : '',
+				colwidth : 27,
+				footnote_align : 'center',
+				width : window.screen.width - 10,
+				height : 400,
+				background_color : '#efefef',
+				legend : {
+					enable : true,
+					background_color : '#ffffff',
+					border : {
+						enable : false
+					}
+				},
+				coordinate : {
+					background_color : '#ffffff',
+					width : window.screen.width - 150,
+					height : 400
+				}
+			}).draw();
+		});
+
+	}
+</script>
+</head>
+<body onload="android.get2dBar()">
+	<table style="width: 100%; margin-top: 20px; text-align: center;">
+		<tr>
+			<td align="center" style="border: 0px;"><div id="canvasDiv"
+					style="margin-left: auto; margin-right: auto;"></div></td>
+		</tr>
+	</table>
+	<table id="mytable" border='1' rules=rows class="mytable">
+	</table>
+	<div id="noresult"></div>
+</body>
+</html>
